@@ -1,41 +1,48 @@
 import './Main.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Main() {
     // let [key, setKey] = useState('');
+    // useEffect used for 'keydown events.  https://stackoverflow.com/questions/61740073/how-to-detect-keydown-anywhere-on-page-in-a-react-app
+    useEffect(() => {
+        const keyDown = (e) => {
+            let highlightKeyId = document.getElementById(e.code)
+            e.preventDefault()
+            // console.log(e)
+            // console.log(`Key: ${e.key}`)
+            // console.log(`Keycode: ${e.code}`)
+            // console.log(`Which: ${e.which}`)
+            if (highlightKeyId) {
+            // console.log(highlightKeyId)
+            highlightKeyId.style.backgroundColor='yellow';
+            highlightKeyId.setAttribute('fill', 'yellow');
+            } else {
+                return
+            }
+        }
 
-    const currentKey = (e) => {
-        e.preventDefault()
-        let currentKey = e.code;
-        // let highlightKeyId = document.getElementById(currentKey)
-        console.log(`Key: ${e.key}`)
-        console.log(`Keycode: ${currentKey}`)
-        console.log(`Which: ${e.which}`)
-        console.log(e)
-        // if (highlightKeyId) {
-        //     console.log(highlightKeyId)
-        //     highlightKeyId.style.backgroundColor='yellow';
-        //     highlightKeyId.setAttribute('fill', 'yellow');
-        // } else {
-        //     return
-        // }
-    }
+        const keyUp = (e) => {
+            e.preventDefault();
+            let highlightKeyId = document.getElementById(e.code);
+            if (highlightKeyId) {
+                highlightKeyId.style.backgroundColor='white';
+                highlightKeyId.setAttribute('fill', 'white');
+            } else {
+                return
+            }  
+        }
+
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
+
+        return function cleanUp() {
+            document.removeEventListener('keydown', keyDown);
+            document.removeEventListener('keyup', keyUp);
+        }
+    }, []);
 
     return (
-        <div onKeyDown={currentKey}>
-            {/* <section className="practiceWords">
-                <div id="wordBox">
-                    <span className="wordList"> 
-                        <span className= singleLtr data-set="active">t</span><span className= singleLtr  data-set="inactive">e</span><span className= singleLtr  data-set="inactive">s</span><span className= singleLtr  data-set="inactive">t</span><span className= singleLtr  data-set="inactive">1</span>
-                    </span>
-                    <span className="wordList">test2</span>
-                    <span className="wordList"> </span>
-                    <span className="wordList">test3</span>
-                </div>
-                <div>
-                    <button id="genWords">Click Me</button>
-                </div>
-            </section> */}
+        <div>
             <section className="practiceWords">
                 <div id="wordBox2">
                     <span className="wordList2"> 
