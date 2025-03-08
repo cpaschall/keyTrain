@@ -1,0 +1,43 @@
+/* Word Box */
+.practiceWords {
+    margin: 25px;
+  }
+  
+  #wordBox {
+    border: 1px black solid;
+    width: 700px;
+    height: 400px;
+    font-size: 2em;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  #wordBox2 {
+    border: 1px black solid;
+    width: 700px;
+    height: 400px;
+    font-size: 2em;
+    text-align: center;
+    line-height: 200px;
+    background-color: darkslategrey;
+  }
+  
+  .wordList {
+    /* color: red; */
+  }
+  
+  /* test keyboard */
+  .keyboardSec {
+    /* height: 30vh; */
+    /* margin-top: 35vh; */
+    /* margin-left: 35vh; */
+  }
+  
+  .testKeyboard {
+    border: 1px black solid;
+    /* width: 1200px; */
+  }
+  
+  .keyText {
+    /* font-size: 0.5rem; */
+  }
