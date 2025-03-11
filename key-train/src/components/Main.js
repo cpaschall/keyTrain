@@ -1,8 +1,10 @@
 import './Main.css'
-import { useState, useEffect } from 'react'
+import Wordlist from './Wordlist';
+import { useEffect } from 'react'
+
 
 export default function Main() {
-    // let [key, setKey] = useState('');
+    
     // useEffect used for 'keydown events.  https://stackoverflow.com/questions/61740073/how-to-detect-keydown-anywhere-on-page-in-a-react-app
     useEffect(() => {
         const keyDown = (e) => {
@@ -43,18 +45,17 @@ export default function Main() {
 
     return (
         <div>
-            <section className="practiceWords">
-                <div id="wordBox2">
-                    <span className="wordList2"> 
-                        
-                    </span>
-                </div>
+            <Wordlist />
+            {/* <section className="practiceWords">
+               <Wordlist />
                 <div>
                     <button 
                     id="genWords2"
+                    onClick={renderWords}
                     >Click Me</button>
+                    <button onClick={(clearWords)}>Clear</button>
                 </div>
-            </section>  
+            </section>   */}
             <section className="keyboardSec">
             {/* style={{marginRight: spacing + 'em'}} */}
                 <svg className="testKeyboard" viewBox="0 0 540 200" height="25rem" style={{aspectRatio: "540 / 200"}}>
