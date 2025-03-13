@@ -7,13 +7,24 @@ export default function Wordlist() {
 
     const renderWords = () => {
         let wordArr = []
-        for(let i = 0; i < lvl1Words.length; i++){
-            wordArr.push(createElement(
-                'span',
-                { className: 'tester' },
-                lvl1Words[i], ' '
-            ))
-        }   
+        // loop through each word in lvl1words array and then nest a loop to add a span element to each letter of that word
+        lvl1Words.map((word) => {
+            for(let i = 0; i<word.length; i++){
+                if(i !== word.length - 1) {
+                    wordArr.push(createElement(
+                        'span',
+                        { className: 'tester', key: Math.floor(Math.random() * 1000)},
+                         word[i]
+                    ))
+                } else {
+                    wordArr.push(createElement(
+                        'span',
+                        { className: 'tester', key: Math.floor(Math.random() * 1000)},
+                         word[i], ' '
+                    ))
+                } 
+            }
+        })
         setCurrentWords(wordArr)
         return currentWords
     }
@@ -36,37 +47,4 @@ export default function Wordlist() {
                 </div>
         </section> 
     )
-//    ternary expression
-    // return words !== '' ? (
-    //     <section className="practiceWords">
-    //             <div id="wordBox2">            
-    //                 {words.forEach(word => {
-    //                 return (
-    //                     <p>word</p>
-    //                 )
-    //                })}
-    //             </div>
-    //             <div>
-    //                 <button 
-    //                 id="genWords2"
-    //                 onClick={renderWords}
-    //                 >Click Me</button>
-    //                 <button onClick={(clearWords)}>Clear</button>
-    //             </div>
-    //     </section> 
-    // ) :
-    // (
-    //     <section className="practiceWords">
-    //             <div id="wordBox2">            
-                    
-    //             </div>
-    //             <div>
-    //                 <button 
-    //                 id="genWords2"
-    //                 onClick={renderWords}
-    //                 >Click Me</button>
-    //                 <button onClick={(clearWords)}>Clear</button>
-    //             </div>
-    //     </section> 
-    // )
 }
