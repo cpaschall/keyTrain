@@ -37,11 +37,36 @@ export default function Main() {
         document.addEventListener('keydown', keyDown);
         document.addEventListener('keyup', keyUp);
 
+        const currentLetter = (e) => {
+            e.preventDefault();
+            console.log(`Main ${e.key}`)
+            let dataSet = document.querySelectorAll('[dataset]');
+            console.log(dataSet)
+            console.log(dataSet[0])
+            for(let i = 0; i < dataSet.length; i++){
+                if(dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent === e.key) {
+                    dataSet[i].style.fontSize = '1em';
+                    dataSet[i].style.color = 'green';
+                    dataSet[i].setAttribute('dataset', 'inactive');
+                    dataSet[i+1].setAttribute('dataset', 'active');
+                } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent != e.key) {
+                    dataSet[i].style.color = 'red';
+                }
+            }
+        }
+        
+        document.addEventListener('keydown', currentLetter);
+
         return function cleanUp() {
             document.removeEventListener('keydown', keyDown);
             document.removeEventListener('keyup', keyUp);
+            document.removeEventListener('keydown', currentLetter)
         }
+    
+
     }, []);
+
+    
 
     return (
         <div>
@@ -58,7 +83,8 @@ export default function Main() {
             </section>   */}
             <section className="keyboardSec">
             {/* style={{marginRight: spacing + 'em'}} */}
-                <svg className="testKeyboard" viewBox="0 0 540 200" height="25rem" style={{aspectRatio: "540 / 200"}}>
+                <svg className="testKeyboard" viewBox="0 0 540 200" height="25rem" style={{aspectRatio: "540 / 200"}}
+                >
                     <rect x="0" y="0" width="35" height="35" rx="2" ry="2" fill="none" stroke="black" id="Backquote"></rect>
                     <text x="8" y="10" textAnchor="middle" dominantBaseline="middle" direction="ltr">~</text>
                     <text x="18" y="25" textAnchor="middle" dominantBaseline="middle" direction="ltr">`</text>
