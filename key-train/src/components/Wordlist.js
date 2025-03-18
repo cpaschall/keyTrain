@@ -3,12 +3,13 @@ import { useState, createElement } from "react"
 const lvl1Words = ['test1', 'test1', 'test3'];
 const wordBoxEl = document.getElementById('wordBox2')
 
+// Generate a list of words from a predefined array
 export default function Wordlist() {
     let [currentWords, setCurrentWords] = useState('');
 
+    // loop through each word in lvl1words array and then nest a loop to add a span element to each letter of that word
     const renderWords = () => {
         let wordArr = []
-        // loop through each word in lvl1words array and then nest a loop to add a span element to each letter of that word
         lvl1Words.map((word, wordIndex, wordArray) => {
             console.log(word)
             console.log(wordIndex)
@@ -44,6 +45,7 @@ export default function Wordlist() {
         return currentWords
     }
 
+    // Clear all words from WordList display
     const clearWords = () => {
         setCurrentWords('')
     }

@@ -2,85 +2,59 @@ import './Main.css'
 import Wordlist from './Wordlist';
 import { useEffect } from 'react'
 
-
 export default function Main() {
-    
     // useEffect used for 'keydown events.  https://stackoverflow.com/questions/61740073/how-to-detect-keydown-anywhere-on-page-in-a-react-app
     useEffect(() => {
-        const keyDown = (e) => {
-            let highlightKeyId = document.getElementById(e.code)
-            e.preventDefault()
-            // console.log(e)
-            // console.log(`Key: ${e.key}`)
-            // console.log(`Keycode: ${e.code}`)
-            // console.log(`Which: ${e.which}`)
-            if (highlightKeyId) {
-            // console.log(highlightKeyId)
-            highlightKeyId.style.backgroundColor='yellow';
-            highlightKeyId.setAttribute('fill', 'yellow');
-            } else {
-                return
-            }
-        }
-
-        const keyUp = (e) => {
-            e.preventDefault();
-            let highlightKeyId = document.getElementById(e.code);
-            if (highlightKeyId) {
-                highlightKeyId.style.backgroundColor='white';
-                highlightKeyId.setAttribute('fill', 'white');
-            } else {
-                return
-            }  
-        }
-
-        document.addEventListener('keydown', keyDown);
-        document.addEventListener('keyup', keyUp);
-
+        let wrongKey = 0;
+        // Keydown event determines a matching or mismatching key and change style and dataset attribute based on event
         const currentLetter = (e) => {
             e.preventDefault();
-            console.log(`Main ${e.key}`)
-            let dataSet = document.querySelectorAll('[dataset]');
-            console.log(dataSet)
-            console.log(dataSet[0])
-            for(let i = 0; i < dataSet.length; i++){
-                if(dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent === e.key) {
-                    dataSet[i].style.fontSize = '1em';
-                    dataSet[i].style.color = 'green';
-                    dataSet[i].setAttribute('dataset', 'inactive');
-                    dataSet[i+1].setAttribute('dataset', 'active');
-                } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent != e.key) {
-                    dataSet[i].style.color = 'red';
+            try {
+                console.log(`Main ${e.key}`)
+                console.log(wrongKey)
+                let dataSet = document.querySelectorAll('[dataset]');
+                console.log(dataSet)
+                console.log(dataSet[0])
+                for(let i = 0; i < dataSet.length; i++){
+                    if (i >= dataSet.length) {
+                        dataSet[i].style.color = 'red';
+                        dataSet[i].setAttribute('dataset', 'inactive');
+                        // dataSet[i+1].setAttribute('dataset', 'active');
+                        wrongKey = 0;
+                        return;
+                    } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent === e.key && wrongKey > 0) {
+                        dataSet[i].style.color = 'red';
+                        dataSet[i].setAttribute('dataset', 'inactive');
+                        dataSet[i+1].setAttribute('dataset', 'active');
+                        wrongKey = 0;
+                        break;
+                    } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent !== e.key) {
+                        console.log("Wrong!")
+                        dataSet[i].style.color = 'red';
+                        wrongKey += 1;
+                        break;
+                    } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent === e.key) {
+                        dataSet[i].style.color = 'green';
+                        dataSet[i].setAttribute('dataset', 'inactive');
+                        dataSet[i+1].setAttribute('dataset', 'active');
+                        break;
+                    }
                 }
+            } catch (error) {
+                return
             }
         }
-        
+
         document.addEventListener('keydown', currentLetter);
 
         return function cleanUp() {
-            document.removeEventListener('keydown', keyDown);
-            document.removeEventListener('keyup', keyUp);
             document.removeEventListener('keydown', currentLetter)
         }
-    
-
     }, []);
-
-    
 
     return (
         <div>
             <Wordlist />
-            {/* <section className="practiceWords">
-               <Wordlist />
-                <div>
-                    <button 
-                    id="genWords2"
-                    onClick={renderWords}
-                    >Click Me</button>
-                    <button onClick={(clearWords)}>Clear</button>
-                </div>
-            </section>   */}
             <section className="keyboardSec">
             {/* style={{marginRight: spacing + 'em'}} */}
                 <svg className="testKeyboard" viewBox="0 0 540 200" height="25rem" style={{aspectRatio: "540 / 200"}}

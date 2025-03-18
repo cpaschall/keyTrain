@@ -1,5 +1,7 @@
 [dataset='active'] {
     background-color: yellow;
+    /* color: black; */
+    
 }
 
 [dataset='inactive'] {
