@@ -1,0 +1,33 @@
+[datachoice='active'] {
+    background-color: yellow;
+}
+
+[datachoice='inactive'] {
+    background-color: none;
+}
+
+.interfaceCont {
+    border: black solid 1px;
+    width: 700px;
+    height: 250px;
+    margin: 25px;
+}
+
+.interfaceSubCont {
+    display: flex;
+    width: 650px;
+    margin: 0px 25px;
+    text-align: center;
+}
+
+.ltrChoice {
+    border: black solid 1px;
+    display:block;
+    width: 30px;
+    height: 30px;
+}
+
+#ltrCont {
+    /* display: flex; */
+    flex-direction: column;
+}

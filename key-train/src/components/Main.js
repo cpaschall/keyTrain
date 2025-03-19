@@ -1,5 +1,6 @@
 import './Main.css'
 import Wordlist from './Wordlist';
+import Interface from './Interface.';
 import { useEffect } from 'react'
 
 export default function Main() {
@@ -10,16 +11,11 @@ export default function Main() {
         const currentLetter = (e) => {
             e.preventDefault();
             try {
-                console.log(`Main ${e.key}`)
-                console.log(wrongKey)
                 let dataSet = document.querySelectorAll('[dataset]');
-                console.log(dataSet)
-                console.log(dataSet[0])
                 for(let i = 0; i < dataSet.length; i++){
                     if (i >= dataSet.length) {
                         dataSet[i].style.color = 'red';
                         dataSet[i].setAttribute('dataset', 'inactive');
-                        // dataSet[i+1].setAttribute('dataset', 'active');
                         wrongKey = 0;
                         return;
                     } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent === e.key && wrongKey > 0) {
@@ -29,7 +25,6 @@ export default function Main() {
                         wrongKey = 0;
                         break;
                     } else if (dataSet[i].getAttribute('dataset') === 'active' && dataSet[i].textContent !== e.key) {
-                        console.log("Wrong!")
                         dataSet[i].style.color = 'red';
                         wrongKey += 1;
                         break;
@@ -45,15 +40,42 @@ export default function Main() {
             }
         }
 
+        const keyDown = (e) => {
+            let highlightKeyId = document.getElementById(e.code)
+            e.preventDefault()
+            if (highlightKeyId) {
+            highlightKeyId.style.backgroundColor='yellow';
+            highlightKeyId.setAttribute('fill', 'yellow');
+            } else {
+                return
+            }
+        };
+
+        const keyUp = (e) => {
+            e.preventDefault();
+            let highlightKeyId = document.getElementById(e.code);
+            if (highlightKeyId) {
+                highlightKeyId.style.backgroundColor='white';
+                highlightKeyId.setAttribute('fill', 'white');
+            } else {
+                return
+            }  
+        };
+
         document.addEventListener('keydown', currentLetter);
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
 
         return function cleanUp() {
-            document.removeEventListener('keydown', currentLetter)
+            document.removeEventListener('keydown', currentLetter);
+            document.removeEventListener('keydown', keyDown);
+            document.removeEventListener('keyup', keyUp);
         }
     }, []);
 
     return (
         <div>
+            <Interface />
             <Wordlist />
             <section className="keyboardSec">
             {/* style={{marginRight: spacing + 'em'}} */}
