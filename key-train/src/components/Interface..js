@@ -2,18 +2,38 @@ import './Interface.css';
 import { useState } from 'react';
 
 export default function Interface() {
-    // const [activeLtr, setActiveLtr] = useState('inactive');
+    const [ltrChoices, setLtrChoices] = useState([]);
 
     // set active letters which will later be used to determine which words to be disply that contain only active letters
+    let allLtrs = [];
+    // setLtrChoices(allLtrs)
     const activeLtrs = (e) => {
         e.preventDefault();
+        let tempAllLtrs = [...allLtrs];
+        let currentLtr = e.target.textContent
         let currentStatus = e.target.attributes.datachoice;
         if (currentStatus.textContent === 'inactive') {
-            currentStatus.textContent = 'active'
+            currentStatus.textContent = 'active';
+            allLtrs.push(currentLtr)
+            // setLtrChoices(allLtrs)
+            // console.log(allLtrs);
         } else if (currentStatus.textContent === 'active') {    
-            currentStatus.textContent = 'inactive'
+            currentStatus.textContent = 'inactive';
+            for (let i = 0; i<allLtrs.length; i++){
+                if(allLtrs[i] === currentLtr) {
+                    allLtrs.splice(i, 1);
+                }
+            }
         }
+        console.log(`allLtrs array: ${allLtrs}`)
+        console.log(`tempAllLtrs array: ${tempAllLtrs}`)
+        console.log(`useState: ${ltrChoices}`)
+        // setLtrChoices(tempAllLtrs)
     }
+
+    // const submitLtrs = () => {
+    //     setLtrChoices(allLtrs)
+    // }
 
     return (
         <div className='interfaceCont'>
@@ -56,6 +76,10 @@ export default function Interface() {
                     <span className='ltrChoice' datachoice='inactive'>B</span>
                     <span className='ltrChoice' datachoice='inactive'>N</span>
                     <span className='ltrChoice' datachoice='inactive'>M</span>
+                </div>
+                <div>
+                    {ltrChoices}
+                    {/* <button id='ltrBtn' onClick={submitLtrs}>Confirm</button> */}
                 </div>
             </div>
         </div>
