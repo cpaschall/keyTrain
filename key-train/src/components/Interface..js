@@ -2,38 +2,46 @@ import './Interface.css';
 import { useState } from 'react';
 
 export default function Interface() {
-    const [ltrChoices, setLtrChoices] = useState([]);
 
-    // set active letters which will later be used to determine which words to be disply that contain only active letters
-    let allLtrs = [];
-    // setLtrChoices(allLtrs)
-    const activeLtrs = (e) => {
-        e.preventDefault();
-        let tempAllLtrs = [...allLtrs];
-        let currentLtr = e.target.textContent
-        let currentStatus = e.target.attributes.datachoice;
-        if (currentStatus.textContent === 'inactive') {
-            currentStatus.textContent = 'active';
-            allLtrs.push(currentLtr)
-            // setLtrChoices(allLtrs)
-            // console.log(allLtrs);
-        } else if (currentStatus.textContent === 'active') {    
-            currentStatus.textContent = 'inactive';
-            for (let i = 0; i<allLtrs.length; i++){
-                if(allLtrs[i] === currentLtr) {
-                    allLtrs.splice(i, 1);
-                }
-            }
-        }
-        console.log(`allLtrs array: ${allLtrs}`)
-        console.log(`tempAllLtrs array: ${tempAllLtrs}`)
-        console.log(`useState: ${ltrChoices}`)
-        // setLtrChoices(tempAllLtrs)
-    }
+    const [letters, setLetters] = useState([
+        {letter:'Q', active: false},
+        {letter:'W', active: false},
+        {letter:'E', active: false},
+        {letter:'R', active: false},
+        {letter:'T', active: false},
+        {letter:'Y', active: false},
+        {letter:'U', active: false},
+        {letter:'I', active: false},
+        {letter:'O', active: false},
+        {letter:'P', active: false},
+        {letter:'A', active: false},
+        {letter:'S', active: false},
+        {letter:'D', active: false},
+        {letter:'F', active: false},
+        {letter:'G', active: false},
+        {letter:'H', active: false},
+        {letter:'J', active: false},
+        {letter:'K', active: false},
+        {letter:'L', active: false},
+        {letter:'Z', active: false},
+        {letter:'X', active: false},
+        {letter:'C', active: false},
+        {letter:'V', active: false},
+        {letter:'B', active: false},
+        {letter:'N', active: false},
+        {letter:'M', active: false}
+    ]);
 
-    // const submitLtrs = () => {
-    //     setLtrChoices(allLtrs)
-    // }
+    // change active status when letter is clicked
+    const toggleActive = (index) => {
+        setLetters((prevLetters) => 
+            prevLetters.map((item, i) =>
+            i === index ? {...item, active: !item.active} : item)
+            )
+    };
+
+    //filter active letters which will later be used to determine which words to be display that contain only active letters
+    const activeLetters = letters.filter(letter => letter.active)
 
     return (
         <div className='interfaceCont'>
@@ -45,41 +53,17 @@ export default function Interface() {
             </div>
             <div id='ltrCont'>
                 <p>Letters</p>
-                <div className='interfaceSubCont' onClick={activeLtrs}>
-                    <span className='ltrChoice' datachoice='inactive'>Q</span>
-                    <span className='ltrChoice' datachoice='inactive'>W</span>
-                    <span className='ltrChoice' datachoice='inactive'>E</span>
-                    <span className='ltrChoice' datachoice='inactive'>R</span>
-                    <span className='ltrChoice' datachoice='inactive'>T</span>
-                    <span className='ltrChoice' datachoice='inactive'>Y</span>
-                    <span className='ltrChoice' datachoice='inactive'>U</span>
-                    <span className='ltrChoice' datachoice='inactive'>I</span>
-                    <span className='ltrChoice' datachoice='inactive'>O</span>
-                    <span className='ltrChoice' datachoice='inactive'>P</span>
-                {/* </div>
-                <div className='interfaceSubCont'> */}
-                    <span className='ltrChoice' datachoice='inactive'>A</span>
-                    <span className='ltrChoice' datachoice='inactive'>S</span>
-                    <span className='ltrChoice' datachoice='inactive'>D</span>
-                    <span className='ltrChoice' datachoice='inactive'>F</span>
-                    <span className='ltrChoice' datachoice='inactive'>G</span>
-                    <span className='ltrChoice' datachoice='inactive'>H</span>
-                    <span className='ltrChoice' datachoice='inactive'>J</span>
-                    <span className='ltrChoice' datachoice='inactive'>K</span>
-                    <span className='ltrChoice' datachoice='inactive'>L</span>
-                {/* </div>
-                <div className='interfaceSubCont'> */}
-                    <span className='ltrChoice' datachoice='inactive'>Z</span>
-                    <span className='ltrChoice' datachoice='inactive'>X</span>
-                    <span className='ltrChoice' datachoice='inactive'>C</span>
-                    <span className='ltrChoice' datachoice='inactive'>V</span>
-                    <span className='ltrChoice' datachoice='inactive'>B</span>
-                    <span className='ltrChoice' datachoice='inactive'>N</span>
-                    <span className='ltrChoice' datachoice='inactive'>M</span>
+                <div className='interfaceSubCont'>
+                    {letters.map((item, index) => (
+                        <span className='ltrChoice' datachoice={item.active ? "active" : "inactive"} key={index} onClick={() => toggleActive(index)}>
+                            {item.letter}
+                        </span>
+                    ))}
                 </div>
-                <div>
-                    {ltrChoices}
-                    {/* <button id='ltrBtn' onClick={submitLtrs}>Confirm</button> */}
+                <div className='actvLtrs'>
+                    {activeLetters.map((item, index) => (
+                        <p key={index}>{item.letter}</p>
+                    ))}
                 </div>
             </div>
         </div>
