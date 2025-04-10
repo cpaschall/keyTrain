@@ -4,7 +4,7 @@ const lvl1Words = ['test1', 'test1', 'test3'];
 const wordBoxEl = document.getElementById('wordBox2')
 
 // Generate a list of words from a predefined array
-export default function Wordlist() {
+export default function Wordlist({allWords}) {
     let [currentWords, setCurrentWords] = useState('');
 
     // loop through each word in lvl1words array and then nest a loop to add a span element to each letter of that word
